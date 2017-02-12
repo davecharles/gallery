@@ -1,0 +1,8 @@
+ <div class="col-md-4" style="min-height:400px;">
+    <div class="span12">
+        <img src="/img?img_id={{ image.key.urlsafe() }}"/>
+        <p class="lead" style="max-width: 240px">{{ image.description }}</p>
+        {% block content %}{% endblock %}
+        <small>{{ image.date.strftime('%d %b') }} at {{ image.date.strftime('%H:%M') }}</small>
+    </div>
+</div>

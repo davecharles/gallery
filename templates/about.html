@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head %}  {{ super() }} {% endblock %}
+{% block script %}  {{ super() }} {% endblock %}
+{% block nav %} {{ super() }} {% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Gallery</h1>
+    <p class="lead">
+        Gallery is a simple web application that allows a signed-in or anonymous
+        user to view images.  Signed-in users can upload images, add a description
+        and set whether it is public or private.  Signed-in users can see all
+        their own uploaded public and private images, and any public images uploaded
+        by other users.
+    </p>
+    <p class="lead">
+        The application was developed using Python 2.7.6 using the <kbd>webapp2</kbd>
+        framework and is intended for deployment to Google App Engine.  Google
+        Cloud Datastore is used via the <kbd>ndb</kbd> client to store images and
+        their details.
+    </p>
+</div>
+{% endblock %}

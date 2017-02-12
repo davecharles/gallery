@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}  {{ super() }} {% endblock %}
+{% block script %}  {{ super() }} {% endblock %}
+{% block nav %} {{ super() }} {% endblock %}
+{% block content %}
+    {% if not logged_in %}
+        <blockquote>You must be logged in to manage your images.</blockquote>
+    {% else %}
+        {% if user_images|length == 0 %}
+            <blockquote>
+                You haven't uploaded any images yet.  Click <em>Load an Image...</em> to select an image.
+            </blockquote>
+        {% endif %}
+        {% if user_images|length > 20 %}
+            <blockquote>
+                You've reached your image limit of 20, so image uploads have been disabled.
+            </blockquote>
+        {% else %}
+            <div class="container" style="border: 1px solid lightgrey; padding-top: 10px;">
+                <form action="/upload" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label class="btn btn-primary btn-file">
+                            Load an Image... <input id="file-upload" type="file" name="img" style="display: none;">
+                        </label>
+                    </div>
+                    <div class="container">
+                        <div id="image-holder">
+                            <img id="image-holder" src="images/placeholder.png" class="img-rounded" width="110" height="110">
+                            <br>
+                        </div>
+                    </div>
+                    <div class="form-group" style=" padding-top: 10px;">
+                        <label for="inputlg">Description:</label>
+                        <input class="form-control input-lg" name="description" type="text" maxlength="50">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="public">Make image public?</label>
+                        </div>
+                        <br>
+                        <button id="upload-btn" type="submit" class="btn btn-primary" disabled="">Upload Image</button>
+                        <br>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+        {% if user_images|length > 0 %}
+            <h1>Your Images</h1>
+            <div class="container">
+                {% for row in user_images | batch(3) %}
+                    <div class="row-fluid">
+                        {% for image in row  %}
+                            {% if image.public %}
+                                {% include 'public_image_tile.html' %}
+                            {% else %}
+                                {% include 'private_image_tile.html' %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

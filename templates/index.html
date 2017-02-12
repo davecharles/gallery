@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}  {{ super() }} {% endblock %}
+{% block script %}  {{ super() }} {% endblock %}
+{% block nav %} {{ super() }} {% endblock %}
+{% block content %}
+    {% if public_images|length == 0 and private_images|length == 0 %}
+        <blockquote>
+            Sorry, there are no images.  Go to <a href="/manage">Manage Images</a>
+            to add some.
+        </blockquote>
+    {% else %}
+        <div class="container">
+            {% for row in private_images | batch(3) %}
+                <div class="row-fluid">
+                    {% for image in row  %}
+                        {% include 'private_image_tile.html' %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {% for row in public_images | batch(3) %}
+                <div class="row-fluid">
+                    {% for image in row  %}
+                        {% include 'public_image_tile.html' %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
